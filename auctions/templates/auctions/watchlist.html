@@ -1,0 +1,50 @@
+{% extends "auctions/layout.html" %}
+{% block title %}Watchlist{% endblock title %}
+{% block body %}
+
+    <h3 class="text-center mt-2">My Watchlist</h3>
+{% for watchlist in watchlists %}
+    <div class="container mt-5 mb-5">
+        <div class="d-flex justify-content-center row">
+            <div class="col-md-10 col-xxl-12">
+                <div class="row p-2 bg-white border rounded mb-3">
+                    <div class="col-md-3 mt-1"><img class="img-fluid img-responsive rounded product-image" src="{{watchlist.listing.image}}"></div>
+                    <div class="col-md-6 mt-1">
+                        <h5>{{watchlist.listing.title}}</h5>
+                        <div class="mt-1 mb-1 spec-1">Category: <span><a href="{% url 'cat-wise-listing' watchlist.listing.category.id%}">{{watchlist.listing.category}}</a></span></div>
+
+                        
+                        <p class="text-justify para mb-0">{{watchlist.listing.description|truncatechars:250}}<br><br></p>
+                    </div>
+                    <div class="align-items-center align-content-center col-md-3 border-left mt-1">
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="mr-1">Starting Price: </span><b class="text-success">${{watchlist.listing.starting_bid}}</b>
+                        </div>
+                        
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="mr-1">Created at: </span><b class="text-success">{{watchlist.listing.creation_date}}</b>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="mr-1">Owner: </span><b class="text-success">{{watchlist.listing.owner}}</b>
+                        </div>
+                        <div class="d-flex flex-row align-items-center">
+                            <span class="mr-1">Status: </span>
+                            {% if watchlist.listing.close_status == True %}
+                                <b class="text-danger">Closed</b>
+                            {% else %}
+                                <b class="text-success">Open</b>
+                            {% endif %}
+                        </div>
+                        <div class="d-flex flex-column mt-4">
+                            <a href="{% url 'individual-listing' watchlist.listing.id %}" class="btn btn-primary btn-sm" type="button" >Details</a>
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endfor %}
+
+{% endblock %}
